@@ -1,0 +1,75 @@
+<html style='height: 100%; overflow: hidden;'>
+<head>
+<title>Canvas in a shower</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="title" content="Canvas in a shower">
+<meta name="description" content="しぐれうい先生誕生日記念非公式ファンアート">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://magicien.github.io/CanvasInShower/">
+<meta property="og:title" content="Canvas in a shower">
+<meta property="og:description" content="しぐれうい先生誕生日記念非公式ファンアート">
+<meta property="og:image" content="https://magicien.github.io/CanvasInShower/img/card.jpg">
+<meta property="twitter:card" content="summary_large_image">
+<meta property="twitter:url" content="https://magicien.github.io/CanvasInShower/">
+<meta property="twitter:title" content="Canvas in a shower">
+<meta property="twitter:description" content="しぐれうい先生誕生日記念非公式ファンアート">
+<link rel="icon" type="image/png" href="./img/favicon.png">
+<link href="./fontawesome/css/all.css" rel="stylesheet">
+<script src='./js/main.js'></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@700&display=swap" rel="stylesheet">
+<link rel='stylesheet' type='text/css' href='./style.css' />
+</head>
+<body>
+<div id='root'>
+  <div id='menu'>
+    <ul id='menu-items'>
+    </ul>
+    <button id='menu-toggle-button'>
+      <i id='menu-toggle-icon' class='fa fa-plus'></i>
+    </button>
+  </div>
+</div>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="800">
+  <defs>
+    <filter id="drop">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur" />
+      <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 19 -9" result="drop" />
+      <feComposite in="SourceGraphic" in2="drop" operator="atop"/>
+    </filter>
+  </defs>
+</svg>
+<div id='ss-wrapper'>
+  <div id='ss-frame'>
+    <img id='ss' className='ss-image' />
+    <div id='ss-text'>
+      <span>画像を長押しか右クリックで保存</span>
+    </div>
+  </div>
+  <div id='ss-close' class='close-button'>
+    <i class='fa fa-xmark'></i>
+  </div>
+</div>
+<div id='description'>
+  <div id='description-outer-wrapper' class='text-outer-wrapper'>
+    <div id='description-wrapper' class='text-inner-wrapper'>
+      このページは、<a href="https://twitter.com/ui_shig">しぐれうい</a>さんの誕生日、ソロアルバム発売、リアルイベント開催を記念した非公式ファンアートです。<br />
+      <br />
+      しぐれういさんの特設サイトはこちら↓<br />
+      <a href="https://madaame-shigureui.com">まだ雨はやまない＆うい・おん・すてーじ-雨上がりの文化祭-特設サイト</a><br />
+      <br />
+      作成にあたり参考・使用させていただいた技術、画像については、<a href="https://github.com/magicien/CanvasInShower">GitHub</a>に記載しています。<br />
+    </div>
+  </div>
+  <div id='description-close' class='close-button'>
+    <i class='fa fa-xmark'></i>
+  </div>
+</div>
+<div id='flash'></div>
+<audio id="bgm" preload loop>
+  <source src="rain.mp3" type="audio/mp3">
+  <source src="rain.ogg" type="audio/ogg">
+</audio>
+</body>
+</html>
