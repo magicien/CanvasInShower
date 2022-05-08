@@ -1,7 +1,7 @@
 # CanvasInShower
 May showers bring playful hours
 
-![Canvas in a shower](https://raw.githubusercontent.com/magicien/CanvasInShower/main/public/img/card.png)
+![Canvas in a shower](https://raw.githubusercontent.com/magicien/CanvasInShower/main/docs/img/card.png)
 
 [実際のページはこちら](https://magicien.github.io/CanvasInShower/)
 
@@ -41,7 +41,7 @@ $ yarn start
     - ソースコード、画像はCoderopsよりMITライセンスの下で配布されています
         - https://tympanus.net/codrops/licensing/
     - 使用しているファイル
-        - public/img/drop-color-alpha.png
+        - docs/img/drop-color-alpha.png
         - src/shaders/OuterWindowShader.js
         - src/shaders/RainShader.js
         - src/Canvas.js
@@ -52,8 +52,8 @@ $ yarn start
     - ソースコードはCoderopsよりMITライセンスの下で配布されています
         - https://tympanus.net/codrops/licensing/
     - 使用しているファイル
-        - public/index.html
-        - public/style.css
+        - docs/index.html
+        - docs/style.css
         - src/Button.js
         - src/Menu.js
 - ボタンのアイコンにはFont Awesomeを使用しています
@@ -61,5 +61,5 @@ $ yarn start
     - フォントファイルはSIL OFL 1.1ライセンス、ソースコードはMITライセンスの下で配布されています
         - https://fontawesome.com/license/free
     - 使用しているファイル
-        - public/fontawesome以下のファイル全て
+        - docs/fontawesome以下のファイル全て
 - 上記以外のファイルについては、MITライセンスの下で配布します

@@ -23,7 +23,13 @@ module.exports = {
   },
   output: {
     filename: 'main.js',
-    path: path.join(process.cwd(), 'public/js'),
+    path: path.join(process.cwd(), 'docs/js'),
+  },
+  devServer: {
+    static: {
+      directory: './docs',
+    },
+    hot: true,
   },
   target: ['web', 'es5']
 };
