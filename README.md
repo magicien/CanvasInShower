@@ -1,7 +1,9 @@
 # CanvasInShower
 May showers bring playful hours
 
-![Canvas in a shower](https://raw.githubusercontent.com/magicien/CanvasInShower/master/public/img/card.png)
+![Canvas in a shower](https://raw.githubusercontent.com/magicien/CanvasInShower/main/public/img/card.png)
+
+[実際のページはこちら](https://magicien.github.io/CanvasInShower/)
 
 ---
 
@@ -24,6 +26,7 @@ May showers bring playful hours
 $ git clone https://github.com/magicien/CanvasInShower.git
 $ cd CanvasInShower
 $ yarn install
+$ yarn build
 $ yarn start
 ```
 
