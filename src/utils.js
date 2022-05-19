@@ -59,6 +59,20 @@ export const addPressEvent = (id, func) => {
   element.addEventListener('mousedown', callback);
 };
 
+export const addClickEvent = (id, func) => {
+  const element = document.getElementById(id);
+  if (!element) {
+    return;
+  }
+
+  const callback = (ev) => {
+    ev.preventDefault();
+    func(ev);
+  };
+  element.addEventListener('touchup', callback);
+  element.addEventListener('mouseup', callback);
+};
+
 export const stopPressEventPropagation = (id) => {
   const element = document.getElementById(id);
   if (!element) {

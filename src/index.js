@@ -2,7 +2,9 @@ import Button from './Button';
 import Canvas from './Canvas';
 import Menu from './Menu';
 import Sound from './Sound';
-import { animate, addPressEvent, stopPressEventPropagation } from './utils';
+import {
+  animate, addClickEvent, addPressEvent, stopPressEventPropagation,
+} from './utils';
 
 document.addEventListener('DOMContentLoaded', () => {
   window.addEventListener('touchmove', (event) => {
@@ -120,7 +122,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const wrapper = document.getElementById('save-wrapper');
     wrapper.style.visibility = 'hidden';
   };
-  addPressEvent('copy-url-button', () => {
+  addClickEvent('copy-url-button', () => {
     const urlInput = document.getElementById('save-url');
 
     const showMessage = () => {
@@ -163,7 +165,7 @@ document.addEventListener('DOMContentLoaded', () => {
       showMessage();
     }
   });
-  addPressEvent('save-url-share', () => {
+  addClickEvent('save-url-share', () => {
     if (!navigator.share) {
       return;
     }
