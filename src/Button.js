@@ -7,7 +7,7 @@ export default class Button {
     this.id = id;
     this.icon = icon;
     this.onClick = onClick;
-    this.moveY = 105;
+    this.moveY = 135;
   }
 
   appendTo(parent) {

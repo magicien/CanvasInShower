@@ -34,6 +34,10 @@ export default class Shader {
     this.width = 0;
     this.height = 0;
 
+    this.readyResolve = null;
+    this.readyPromise = new Promise((resolve) => {
+      this.readyResolve = resolve;
+    });
     this.initialize(opts);
   }
 
@@ -166,13 +170,20 @@ export default class Shader {
     const gl = this.context;
 
     gl.useProgram(this.program);
+    const imagePromises = [];
     this.textureObjects = [];
     this.textures.forEach((tex, i) => {
       if (typeof tex.src === 'string') {
         const img = new Image();
         const texture = gl.createTexture();
-        img.onload = () => this.setTexture(i, tex.name, texture, img);
-        img.src = tex.src;
+        const promise = new Promise((resolve) => {
+          img.onload = () => {
+            this.setTexture(i, tex.name, texture, img);
+            resolve();
+          };
+          img.src = tex.src;
+        });
+        imagePromises.push(promise);
       } else {
         // TODO: Type check
         this.setTexture(i, tex.name, tex.src);
@@ -181,6 +192,10 @@ export default class Shader {
 
     gl.activeTexture(gl[`TEXTURE${this.textures.length + 1}`]);
     gl.activeTexture(gl[`TEXTURE${this.textures.length}`]);
+
+    Promise.all(imagePromises).then(() => {
+      this.readyResolve();
+    });
   }
 
   setTexture(index, name, texture, image = null, width = 0, height = 0) {

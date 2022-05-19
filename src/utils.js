@@ -84,7 +84,7 @@ export const printError = (...args) => {
 
 const crcTable = [];
 let crcTableComputed = false;
-const makeCRCTable = () => {
+const initCRCTable = () => {
   let c;
   for (let n = 0; n < 256; n += 1) {
     c = n;
@@ -104,7 +104,7 @@ const makeCRCTable = () => {
 const updateCRC = (crc, data, start, end) => {
   let c = crc;
   if (!crcTableComputed) {
-    makeCRCTable();
+    initCRCTable();
   }
 
   for (let n = start; n < end; n += 1) {
@@ -114,3 +114,43 @@ const updateCRC = (crc, data, start, end) => {
 };
 
 export const crc32 = (data, start, end) => updateCRC(0xFFFFFFFF, data, start, end) ^ 0xFFFFFFFF;
+
+const base64Table = [];
+const base64InvTable = {};
+let base64TableComputed = false;
+const initBase64Table = () => {
+  for (let i = 0; i < 26; i += 1) {
+    base64Table.push(String.fromCharCode(65 + i));
+  }
+  for (let i = 0; i < 26; i += 1) {
+    base64Table.push(String.fromCharCode(97 + i));
+  }
+  for (let i = 0; i < 10; i += 1) {
+    base64Table.push(String.fromCharCode(48 + i));
+  }
+  base64Table.push('-'); // Use '-' instead of '+'
+  base64Table.push('/');
+
+  for (let i = 0; i < 64; i += 1) {
+    base64InvTable[base64Table[i]] = i;
+  }
+
+  base64TableComputed = true;
+};
+
+export const convertNumToChar = (num) => {
+  if (!base64TableComputed) {
+    initBase64Table();
+  }
+  if (num < 0 || num >= 64) {
+    return null;
+  }
+  return base64Table[num];
+};
+
+export const convertCharToNum = (ch) => {
+  if (!base64TableComputed) {
+    initBase64Table();
+  }
+  return base64InvTable[ch];
+};

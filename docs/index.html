@@ -42,8 +42,44 @@
     </filter>
   </defs>
 </svg>
-<div id='ss-wrapper'>
-  <div id='ss-frame'>
+<div id='save-wrapper' class='screen-wrapper'>
+  <div id='save-frame' class='message-frame'>
+    <div id='save-text'>
+      <span>お絵描きデータ</span>
+    </div>
+    <div id='save-warning'>
+      <span id='save-warning-text'>お絵描きデータが大きすぎるため、一部の古いデータは保存されません</span>
+    </div>
+    <div>
+      <div id='save-url-wrapper'>
+        <input id='save-url' type='text' value='' readonly='readonly' />
+        <div id='copy-url-button'>
+          <i class='fa fa-link'></i>
+        </div>
+      </div>
+    </div>
+    <div id='save-url-share-buttons'>
+      <a id='save-url-twitter-link' href='' target='_blank'>
+        <div id='save-url-twitter' class='share-button'>
+          <i class='fa-brands fa-twitter'></i>
+        </div>
+      </a>
+      <div id='save-url-share' class='share-button'>
+        <i class='fa-solid fa-arrow-up-from-bracket'></i>
+      </div>
+    </div>
+  </div>
+  <div id='save-close' class='close-button'>
+    <i class='fa fa-xmark'></i>
+  </div>
+</div>
+<div id='copied-message-wrapper' class='screen-wrapper'>
+  <div id='copied-message'>
+    <span>コピーしました！</span>
+  </div>
+</div>
+<div id='ss-wrapper' class='screen-wrapper'>
+  <div id='ss-frame' class='message-frame'>
     <img id='ss' className='ss-image' />
     <div id='ss-text'>
       <span>画像を長押しか右クリックで保存</span>
@@ -56,12 +92,14 @@
 <div id='description'>
   <div id='description-outer-wrapper' class='text-outer-wrapper'>
     <div id='description-wrapper' class='text-inner-wrapper'>
-      このページは、<a href="https://twitter.com/ui_shig">しぐれうい</a>さんの誕生日、ソロアルバム発売、リアルイベント開催を記念した非公式ファンアートです。<br />
+      このページは、<a href="https://twitter.com/ui_shig">しぐれうい</a>さんの3周年、ソロアルバム発売、リアルイベント開催、誕生日を記念した非公式ファンアートです。<br />
       <br />
       しぐれういさんの特設サイトはこちら↓<br />
       <a href="https://madaame-shigureui.com">まだ雨はやまない＆うい・おん・すてーじ-雨上がりの文化祭-特設サイト</a><br />
       <br />
       作成にあたり参考・使用させていただいた技術、画像については、<a href="https://github.com/magicien/CanvasInShower">GitHub</a>に記載しています。<br />
+      <br />
+      author: magicien<br />
     </div>
   </div>
   <div id='description-close' class='close-button'>

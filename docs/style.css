@@ -98,7 +98,7 @@ body {
   left: 0.01;
 }
 
-#ss-wrapper {
+.screen-wrapper {
   position: absolute;
   top: 0;
   left: 0;
@@ -112,7 +112,7 @@ body {
   justify-content: center;
 }
 
-#ss-frame {
+.message-frame {
   max-height: 90%;
   max-width: 90%;
   height: 90%;
@@ -195,4 +195,120 @@ body {
   width: 100%;
   background-color: white;
   visibility: hidden;
+}
+
+#save-frame {
+  height: auto;
+  padding: 20px;
+}
+
+#save-text {
+  font-size: 18px;
+  width: 100%;
+  text-align: center;
+  padding: 15px;
+}
+
+#save-warning {
+  font-size: 16px;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+#save-warning-text {
+  width: 100%;
+  color: red;
+}
+
+#save-url-wrapper {
+  box-sizing: border-box;
+  display: table;
+  height: 32px;
+  line-height: 32px;
+}
+
+#save-url {
+  border: solid 1px orange;
+  border-bottom-left-radius: 5px;
+  border-top-left-radius: 5px;
+  border-bottom-right-radius: 0;
+  border-top-right-radius: 0;
+  display: inline-block;
+  height: 32px;
+  font-size: 16px;
+  margin: 0;
+  padding-left: 12px;
+  padding-right: 12px;
+}
+
+#save-url-twitter-link {
+  text-decoration: none;
+}
+
+#copy-url-button {
+  box-sizing: border-box;
+  border: solid 1px orange;
+  border-left-width: 0;
+  border-bottom-right-radius: 5px;
+  border-top-right-radius: 5px;
+  background-color: white;
+  display: table-cell;
+  height: 30px;
+  line-height: 30px;
+  width: 40px;
+  margin: 0;
+  text-align: center;
+  vertical-align: middle;
+  color: orange;
+}
+
+#copy-url-button:hover {
+  background-color: peachpuff;
+}
+
+#copied-message-wrapper {
+  pointer-events: none;
+}
+
+#copied-message {
+  background-color: white;
+  font-size: 18px;
+  border: double orange;
+  color: orange;
+  height: 30px;
+  white-space: nowrap;
+  line-height: 30px;
+  margin: 0;
+  text-align: center;
+  vertical-align: middle;
+  padding: 0 12px;
+}
+
+#save-url-share-buttons {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+#save-url-share-buttons {
+  padding: 15px;
+}
+
+.share-button {
+  border: solid 1px orange;
+  height: 44px;
+  width: 44px;
+  border-radius: 50%;
+  font-size: 20px;
+  color: orange;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 0 5px;
+}
+
+.share-button:hover {
+  background-color: peachpuff;
 }

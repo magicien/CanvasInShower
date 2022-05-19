@@ -1,3 +1,5 @@
+/* eslint-disable no-bitwise */
+
 import Bone from './Bone';
 import BoneData from './BoneData';
 import DrawingData from './DrawingData';
@@ -11,7 +13,7 @@ import ImageShader from './shaders/ImageShader';
 import InnerWindowShader from './shaders/InnerWindowShader';
 import OuterWindowShader from './shaders/OuterWindowShader';
 import {
-  random, chance, animate, printError,
+  random, chance, animate, printError, convertNumToChar, convertCharToNum,
 } from './utils';
 
 const calcDragPoint = (touches) => {
@@ -28,7 +30,9 @@ export default class Canvas {
   constructor(width, height) {
     this.isPlaying = false;
     this.isResetting = false;
-    this.screenshotPromise = null;
+    this.screenshotResolve = null;
+
+    this.drawingLogs = [];
 
     this.isAutoPlaying = false;
     this.autoPlayTime = 60000;
@@ -93,6 +97,20 @@ export default class Canvas {
       backgroundSampler: this.innerWindowShader.frameTexture,
       rainSampler: this.rainShader.frameTexture,
     });
+
+    this.readyPromise = new Promise((resolve) => {
+      const promises = [
+        this.characterShader,
+        this.drawingShader,
+        this.bufferShader,
+        this.rainShader,
+        this.imageShader,
+        this.innerWindowShader,
+        this.outerWindowShader,
+      ].map((shader) => shader.readyPromise);
+      Promise.all(promises).then(resolve);
+    });
+
     this.drops = [];
     this.drawingPoints = [];
     this.previousPoint = null;
@@ -267,6 +285,7 @@ export default class Canvas {
       this.isDrawing = false;
       this.previousPoint = null;
       this.dragPoint = null;
+      this.addNullToDrawingLogs();
       this.resetWatchdog();
     });
     document.addEventListener('touchend', (ev) => {
@@ -276,6 +295,7 @@ export default class Canvas {
           this.isDrawing = false;
           this.previousPoint = null;
           this.previousTouch = null;
+          this.addNullToDrawingLogs();
         }
       }
       this.resetWatchdog();
@@ -316,9 +336,19 @@ export default class Canvas {
     return [x, y];
   }
 
+  addNullToDrawingLogs() {
+    if (this.drawingLogs.length <= 0) {
+      return;
+    }
+    if (this.drawingLogs[this.drawingLogs.length - 1] !== null) {
+      this.drawingLogs.push(null);
+    }
+  }
+
   addDrawingPoint(ev, autoplay = false) {
     const pt = autoplay ? ev : this.convertPosition(ev);
     this.fingerPos = pt;
+    this.drawingLogs.push(pt);
 
     const ix = Math.max(0, Math.min(3, Math.floor(pt[0] / 256)));
     const iy = Math.max(0, Math.min(3, Math.floor(pt[1] / 256)));
@@ -437,6 +467,7 @@ export default class Canvas {
           this.addDrawingPoint([x, y], true);
         } else {
           this.previousPoint = null;
+          this.addNullToDrawingLogs();
         }
         this.autoPlayIndex += 1;
         if (this.autoPlayIndex >= this.autoPlayData.length) {
@@ -486,6 +517,7 @@ export default class Canvas {
           this.cleanAreas[x][y] = true;
         }
       }
+      this.drawingLogs = [];
     });
   }
 
@@ -580,6 +612,72 @@ export default class Canvas {
 
     this.outerWindowShader.resize(this.scaledWidth, this.scaledHeight);
     this.outerWindowShader.usesFrameBuffer = false;
+  }
+
+  generateDrawingURL() {
+    const maxDataCount = 1350; // 1381
+    const logLength = this.drawingLogs.length;
+    let dataCount = 0;
+    let index = logLength - 1;
+    for (; index >= 0; index -= 1) {
+      if (this.drawingLogs[index] === null) {
+        dataCount += 1;
+      } else {
+        dataCount += 3;
+      }
+      if (dataCount >= maxDataCount) {
+        break;
+      }
+    }
+
+    const overflow = (index >= 0);
+    index = Math.max(0, index);
+
+    let url = `${window.location.origin + window.location.pathname}?d=`;
+    for (let i = index; i < logLength; i += 1) {
+      if (this.drawingLogs[i] === null) {
+        if (i < logLength - 1) {
+          url += ',';
+        }
+      } else {
+        const x = Math.max(0, Math.min(511, Math.round(this.drawingLogs[i][0] * 0.5)));
+        const y = Math.max(0, Math.min(511, Math.round(this.drawingLogs[i][1] * 0.5)));
+        const b0 = ((x & 0x1F8) >> 3);
+        const b1 = ((x & 0x7) << 3) | ((y & 0x1C0) >> 6);
+        const b2 = (y & 0x3F);
+        url += convertNumToChar(b0) + convertNumToChar(b1) + convertNumToChar(b2);
+      }
+    }
+
+    return [url, overflow];
+  }
+
+  loadDrawingURL() {
+    const params = new URLSearchParams(window.location.search);
+    const data = params.get('d');
+    if (!data || data.length <= 0) {
+      return;
+    }
+
+    this.previousPoint = null;
+    let index = 0;
+    while (index < data.length) {
+      if (data[index] === ',') {
+        this.previousPoint = null;
+        this.addNullToDrawingLogs();
+        index += 1;
+      } else {
+        const b0 = convertCharToNum(data[index]);
+        const b1 = convertCharToNum(data[index + 1]);
+        const b2 = convertCharToNum(data[index + 2]);
+        const x = (b0 << 3) | ((b1 >>> 3) & 0x7);
+        const y = ((b1 & 0x7) << 6) | (b2 & 0x3F);
+        this.addDrawingPoint([x * 2.0, y * 2.0], true);
+        index += 3;
+      }
+    }
+    this.previousPoint = null;
+    this.addNullToDrawingLogs();
   }
 
   update(screenshot) {
